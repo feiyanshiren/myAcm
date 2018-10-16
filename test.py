@@ -87,7 +87,9 @@ f = d[0: len(d) - 1]
 print(f)
 """
 
-j = 0
-for i in range(1000000):
-    j = i
-print(j)
+f = open("t1.txt", "+w")
+s = ""
+for i in range(100001):
+    s =s + str(i) + " "
+f.write(s)
+f.close()
