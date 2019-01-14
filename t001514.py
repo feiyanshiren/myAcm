@@ -39,3 +39,7 @@ for i in range(100, 999):
     h3 = sum([intf(j, 12) for j in s3])
     if h1 == h2 and h1 == h3:
         print(i)
+
+for T in range(int(input())):
+    n = int(input())
+    print("disappointment....")
