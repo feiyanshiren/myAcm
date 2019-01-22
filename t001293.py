@@ -1,28 +1,25 @@
 try:
     while 1:
-        s1 = [int(i) for i in input().split()]
-        if len(s1) == 0:
+        s = input().split()
+        if len(s) == 0:
             continue
+        s1 = [int(i) for i in s]
         s2 = [int(i) for i in input().split()]
-        z1 = sum(s1)
-        z2 = sum(s2)
-        r = -1
-        if z1 >= z2:
-            if s1[2] >= 90:
-                r = 1
-            else:
-                if s2[2] >= 90:
-                    r = 2
-                else:
-                    r = -1
+        m = {}
+        if s1[2] >= 90:
+            m["1"] = sum(s1)
+        if s2[2] >= 90:
+            m["2"] = sum(s2)
+        r = sorted(m.items(), key=lambda x: x[1], reverse=True)
+        ll = len(r)
+        if ll == 0:
+            print("-1")
+        elif ll == 1:
+            print(r[0][0])
         else:
-            if s2[2] >= 90:
-                r = 2
+            if r[0][1] == r[1][1]:
+                print("1")
             else:
-                if s1[2] >= 90:
-                    r = 1
-                else:
-                    r = -1
-        print(r)
+                print(r[0][0])
 except EOFError:
     pass
