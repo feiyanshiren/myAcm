@@ -1,19 +1,18 @@
-import math 
-
-def isPerfectSquare(x): 
-    s = int(math.sqrt(x)) 
-    return s*s == x 
-
-def isFibonacci(n): 
-    return isPerfectSquare(5*n*n + 4) or isPerfectSquare(5*n*n - 4) 
-    
-    
+a = []
+f1 = 1
+f2 = 1
+a.append(f1)
+a.append(f2)
+for n in range(2, 50):
+    f1 = f1 + f2
+    a.append(f1)
+    f2 = f1 + f2
+    a.append(f2)
 while 1:
-    s = int(input())
-    if s == 0:
+    x = int(input())
+    if x == 0:
         break
+    if x in a:
+        print("YES")
     else:
-        if isFibonacci(s):
-            print("YES")
-        else:
-            print("NO")
+        print("NO")
