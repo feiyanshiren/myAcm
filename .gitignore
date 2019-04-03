@@ -1,3 +1,5 @@
 *.pyc
 *.class
 /__pycache__
+/.settings/org.eclipse.core.resources.prefs
+/*.exe
