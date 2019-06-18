@@ -1,16 +1,11 @@
-a = "Lmck"
 
-print(a.startswith("La"))
 
-m = 1
 
-if m:
-    print(m)
-else:
-    print(10)
+    
+import sys
 
-print()
+a = sys.stdin.read(1)
+b = sys.stdin.read(1)
 
-a = [1,2,3,4]
-for i,v in a:
-    print(i, v)
+print(a)
+print(b)
