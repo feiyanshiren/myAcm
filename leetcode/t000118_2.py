@@ -1,0 +1,24 @@
+class Solution:
+    def generate(self, numRows):
+            """
+            :type numRows: int
+            :rtype: List[List[int]]
+            """
+            result = []
+            for i in range(numRows):
+                now = [1]*(i+1)
+                if i >= 2:
+                    for n in range(1,i):
+                        now[n] = pre[n-1]+pre[n]
+                result += [now]
+                pre = now
+            return result
+
+s = Solution()
+print(s.generate(0))
+print(s.generate(1))
+print(s.generate(2))
+print(s.generate(3))
+print(s.generate(4))
+print(s.generate(5))
+print(s.generate(10))
