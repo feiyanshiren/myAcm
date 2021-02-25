@@ -1,0 +1,144 @@
+914. 卡牌分组
+
+给定一副牌，每张牌上都写着一个整数。
+
+此时，你需要选定一个数字 X，使我们可以将整副牌按下述规则分成 1 组或更多组：
+
+    每组都有 X 张牌。
+    组内所有的牌上都写着相同的整数。
+
+仅当你可选的 X >= 2 时返回 true。
+
+
+
+示例 1：
+
+输入：[1,2,3,4,4,3,2,1]
+输出：true
+解释：可行的分组是 [1,1]，[2,2]，[3,3]，[4,4]
+
+示例 2：
+
+输入：[1,1,1,2,2,2,3,3]
+输出：false
+解释：没有满足要求的分组。
+
+示例 3：
+
+输入：[1]
+输出：false
+解释：没有满足要求的分组。
+
+示例 4：
+
+输入：[1,1]
+输出：true
+解释：可行的分组是 [1,1]
+
+示例 5：
+
+输入：[1,1,2,2,2,2]
+输出：true
+解释：可行的分组是 [1,1]，[2,2]，[2,2]
+
+
+提示：
+
+    1 <= deck.length <= 10000
+    0 <= deck[i] < 10000
+
+解
+
+统计各个数出现的次数，然后求次数之间是否存在公约数
+
+```py
+import collections
+import math
+
+class Solution:
+    def hasGroupsSizeX(self, deck: List[int]) -> bool:
+        l = len(deck)
+        if l < 2:
+            return False
+        c = collections.Counter(deck)
+        r = 0
+        for i in c.values():
+            if i > 0:
+                r = math.gcd(r, i)
+                if r == 1:
+                    return False
+        return r >= 2
+```
+----
+
+
+914. 卡牌分组    --2
+
+给定一副牌，每张牌上都写着一个整数。
+
+此时，你需要选定一个数字 X，使我们可以将整副牌按下述规则分成 1 组或更多组：
+
+    每组都有 X 张牌。
+    组内所有的牌上都写着相同的整数。
+
+仅当你可选的 X >= 2 时返回 true。
+
+
+
+示例 1：
+
+输入：[1,2,3,4,4,3,2,1]
+输出：true
+解释：可行的分组是 [1,1]，[2,2]，[3,3]，[4,4]
+
+示例 2：
+
+输入：[1,1,1,2,2,2,3,3]
+输出：false
+解释：没有满足要求的分组。
+
+示例 3：
+
+输入：[1]
+输出：false
+解释：没有满足要求的分组。
+
+示例 4：
+
+输入：[1,1]
+输出：true
+解释：可行的分组是 [1,1]
+
+示例 5：
+
+输入：[1,1,2,2,2,2]
+输出：true
+解释：可行的分组是 [1,1]，[2,2]，[2,2]
+
+
+提示：
+
+    1 <= deck.length <= 10000
+    0 <= deck[i] < 10000
+
+解
+
+统计各个数出现的次数，然后求次数之间是否存在公约数,使用reduce
+math.gcd求两个数的最大公约数，返回整数；
+
+collections.Counter统计字符串（数字）种类及数量，返回字典；
+
+functools.reduce逐次对上次函数结果与当前序列元素应用函数；
+
+    reduce(function, sequence)
+    例如 reduce(lambda x, y: x+y, [1, 2, 3, 4, 5]) 计算为((((1+2)+3)+4)+5)
+
+
+```py
+from math import gcd
+    from collections import Counter
+    from functools import reduce
+    vals = Counter(deck).values()
+    return reduce(gcd, vals) >= 2
+```
+----
