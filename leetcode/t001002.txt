@@ -1,0 +1,137 @@
+1002. 查找常用字符
+
+给定仅有小写字母组成的字符串数组 A，返回列表中的每个字符串中都显示的全部字符（包括重复字符）组成的列表。例如，如果一个字符在每个字符串中出现 3 次，但不是 4 次，则需要在最终答案中包含该字符 3 次。
+
+你可以按任意顺序返回答案。
+
+ 
+
+示例 1：
+
+输入：["bella","label","roller"]
+输出：["e","l","l"]
+
+示例 2：
+
+输入：["cool","lock","cook"]
+输出：["c","o"]
+
+ 
+
+提示：
+
+    1 <= A.length <= 100
+    1 <= A[i].length <= 100
+    A[i][j] 是小写字母
+
+解：
+根据题意，暴力查询，转换list
+
+```py
+class Solution:
+    def commonChars(self, A: List[str]) -> List[str]:
+        a = [list(i) for i in A]
+        l = len(a)
+        b = a[0]
+        res = []
+        for i in b:
+            t = 1
+            for j in range(1, l):
+                if i in a[j]:
+                    a[j].remove(i)
+                else:
+                    t = 0
+                    break
+            if t:
+                res.append(i)
+        return res
+```
+---
+
+
+1002. 查找常用字符    --2
+
+给定仅有小写字母组成的字符串数组 A，返回列表中的每个字符串中都显示的全部字符（包括重复字符）组成的列表。例如，如果一个字符在每个字符串中出现 3 次，但不是 4 次，则需要在最终答案中包含该字符 3 次。
+
+你可以按任意顺序返回答案。
+
+ 
+
+示例 1：
+
+输入：["bella","label","roller"]
+输出：["e","l","l"]
+
+示例 2：
+
+输入：["cool","lock","cook"]
+输出：["c","o"]
+
+ 
+
+提示：
+
+    1 <= A.length <= 100
+    1 <= A[i].length <= 100
+    A[i][j] 是小写字母
+
+解：
+根据题意，暴力查询，不用转换list
+
+```py
+class Solution:
+    def commonChars(self, A: List[str]) -> List[str]:
+        l = len(A)
+        b = A[0]
+        res = []
+        for i in b:
+            t = 1
+            for j in range(1, l):
+                if i in A[j]:
+                    A[j] = A[j].replace(i, "", 1)
+                else:
+                    t = 0
+                    break
+            if t:
+                res.append(i)
+        return res
+```
+---
+
+1002. 查找常用字符    --3
+
+给定仅有小写字母组成的字符串数组 A，返回列表中的每个字符串中都显示的全部字符（包括重复字符）组成的列表。例如，如果一个字符在每个字符串中出现 3 次，但不是 4 次，则需要在最终答案中包含该字符 3 次。
+
+你可以按任意顺序返回答案。
+
+ 
+
+示例 1：
+
+输入：["bella","label","roller"]
+输出：["e","l","l"]
+
+示例 2：
+
+输入：["cool","lock","cook"]
+输出：["c","o"]
+
+ 
+
+提示：
+
+    1 <= A.length <= 100
+    1 <= A[i].length <= 100
+    A[i][j] 是小写字母
+
+解：
+使用collections，交集运算
+
+```py
+class Solution:
+    def commonChars(self, A: List[str]) -> List[str]:
+        ans=collections.Counter(A[0])
+        for i in A:ans=ans&collections.Counter(i)
+        return list(ans.elements())
+```
+---
