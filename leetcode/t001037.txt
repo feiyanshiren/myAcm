@@ -1,0 +1,101 @@
+1037. 有效的回旋镖
+
+回旋镖定义为一组三个点，这些点各不相同且不在一条直线上。
+
+给出平面上三个点组成的列表，判断这些点是否可以构成回旋镖。
+
+ 
+
+示例 1：
+
+输入：[[1,1],[2,3],[3,2]]
+输出：true
+
+示例 2：
+
+输入：[[1,1],[2,2],[3,3]]
+输出：false
+
+ 
+
+提示：
+
+    points.length == 3
+    points[i].length == 2
+    0 <= points[i][j] <= 100
+
+
+解：
+判断向量(p1-->p2)和向量(p1-->p3)的斜率是否相等。即 (y2-y1)/(x2-x1) == (y3-y1)/(x3-x1).  这个除式判断可以改写成乘式判断：(y3−y1)(x2−x1)−(y2−y1)(x3−x1)=0  (改写的原因是除法有分母为0或精度等问题，总之乘法更方便！) 
+注意，如果坐标本身是浮点型，尽量不要用“==”进行比较，因为在计算机中小数会有一定的误差，这时应该取一定的误差，例如 
+|(y3−y1)(x2−x1)−(y2−y1)(x3−x1)|<=1e−6 
+
+```py
+class Solution:
+    def isBoomerang(self, points: List[List[int]]) -> bool:
+        x1 = points[0][0]
+        y1 = points[0][1]
+        x2 = points[1][0]
+        y2 = points[1][1]
+        x3 = points[2][0]
+        y3 = points[2][1]
+        if abs((y3 - y1) * (x2 - x1) - (y2 - y1) * (x3 - x1)) <= 1e-6:
+            return False
+        else:
+            return True 
+
+```
+---
+
+
+1037. 有效的回旋镖    --2
+
+回旋镖定义为一组三个点，这些点各不相同且不在一条直线上。
+
+给出平面上三个点组成的列表，判断这些点是否可以构成回旋镖。
+
+ 
+
+示例 1：
+
+输入：[[1,1],[2,3],[3,2]]
+输出：true
+
+示例 2：
+
+输入：[[1,1],[2,2],[3,3]]
+输出：false
+
+ 
+
+提示：
+
+    points.length == 3
+    points[i].length == 2
+    0 <= points[i][j] <= 100
+
+
+解：
+用行列式求三角形面积，再判断是否为0
+go 语言版
+双百
+
+```go
+func isBoomerang(points [][]int) bool {
+    x1 := float64(points[0][0])
+    y1 := float64(points[0][1])
+    x2 := float64(points[1][0])
+    y2 := float64(points[1][1])
+    x3 := float64(points[2][0])
+    y3 := float64(points[2][1])
+    s := (1.0 / 2.0) * (x1 * y2 + x2 * y3 + x3 * y1 - x1 * y3 - x2 * y1 - x3 * y2)
+    fmt.Println(s)
+    if math.Abs(s) <= 1e-6{
+        return false
+    }else{
+        return true
+    }
+}
+
+```
+---
