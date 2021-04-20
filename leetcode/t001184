@@ -1,0 +1,250 @@
+1184. 公交站间的距离
+
+环形公交路线上有 n 个站，按次序从 0 到 n - 1 进行编号。我们已知每一对相邻公交站之间的距离，distance[i] 表示编号为 i 的车站和编号为 (i + 1) % n 的车站之间的距离。
+
+环线上的公交车都可以按顺时针和逆时针的方向行驶。
+
+返回乘客从出发点 start 到目的地 destination 之间的最短距离。
+
+ 
+
+示例 1：
+
+输入：distance = [1,2,3,4], start = 0, destination = 1
+输出：1
+解释：公交站 0 和 1 之间的距离是 1 或 9，最小值是 1。
+
+ 
+
+示例 2：
+
+输入：distance = [1,2,3,4], start = 0, destination = 2
+输出：3
+解释：公交站 0 和 2 之间的距离是 3 或 7，最小值是 3。
+
+ 
+
+示例 3：
+
+输入：distance = [1,2,3,4], start = 0, destination = 3
+输出：4
+解释：公交站 0 和 3 之间的距离是 6 或 4，最小值是 4。
+
+ 
+
+提示：
+
+    1 <= n <= 10^4
+    distance.length == n
+    0 <= start, destination < n
+    0 <= distance[i] <= 10^4
+
+解：
+左右遍历然后求最小
+```py
+class Solution:
+    def distanceBetweenBusStops(self, distance: List[int], start: int, destination: int) -> int:
+        z = 0
+        y = 0
+        i = start
+        l = len(distance)
+        while i != destination:
+            z += distance[i]
+            i += 1
+            if i >= l:
+                i = 0
+        i = start
+        while i != destination:
+            i -= 1
+            if i < 0:
+                i = l - 1
+            y += distance[i]
+        # print(z, y)
+        return min(z, y)
+```
+---
+
+
+1184. 公交站间的距离    --2
+
+环形公交路线上有 n 个站，按次序从 0 到 n - 1 进行编号。我们已知每一对相邻公交站之间的距离，distance[i] 表示编号为 i 的车站和编号为 (i + 1) % n 的车站之间的距离。
+
+环线上的公交车都可以按顺时针和逆时针的方向行驶。
+
+返回乘客从出发点 start 到目的地 destination 之间的最短距离。
+
+ 
+
+示例 1：
+
+输入：distance = [1,2,3,4], start = 0, destination = 1
+输出：1
+解释：公交站 0 和 1 之间的距离是 1 或 9，最小值是 1。
+
+ 
+
+示例 2：
+
+输入：distance = [1,2,3,4], start = 0, destination = 2
+输出：3
+解释：公交站 0 和 2 之间的距离是 3 或 7，最小值是 3。
+
+ 
+
+示例 3：
+
+输入：distance = [1,2,3,4], start = 0, destination = 3
+输出：4
+解释：公交站 0 和 3 之间的距离是 6 或 4，最小值是 4。
+
+ 
+
+提示：
+
+    1 <= n <= 10^4
+    distance.length == n
+    0 <= start, destination < n
+    0 <= distance[i] <= 10^4
+
+解：
+求数组切片，需要注意start > destination 的情况
+```py
+class Solution:
+    def distanceBetweenBusStops(self, distance: List[int], start: int, destination: int) -> int:
+        if start <= destination:
+            z = sum(distance[start:destination])
+            y = sum(distance[:start] + distance[destination:])
+            return min(z, y)
+        else:
+            z = sum(distance[start:] + distance[:destination])
+            y = sum(distance[destination:start])
+            return min(z, y)
+```
+---
+
+
+1184. 公交站间的距离    --3
+
+环形公交路线上有 n 个站，按次序从 0 到 n - 1 进行编号。我们已知每一对相邻公交站之间的距离，distance[i] 表示编号为 i 的车站和编号为 (i + 1) % n 的车站之间的距离。
+
+环线上的公交车都可以按顺时针和逆时针的方向行驶。
+
+返回乘客从出发点 start 到目的地 destination 之间的最短距离。
+
+ 
+
+示例 1：
+
+输入：distance = [1,2,3,4], start = 0, destination = 1
+输出：1
+解释：公交站 0 和 1 之间的距离是 1 或 9，最小值是 1。
+
+ 
+
+示例 2：
+
+输入：distance = [1,2,3,4], start = 0, destination = 2
+输出：3
+解释：公交站 0 和 2 之间的距离是 3 或 7，最小值是 3。
+
+ 
+
+示例 3：
+
+输入：distance = [1,2,3,4], start = 0, destination = 3
+输出：4
+解释：公交站 0 和 3 之间的距离是 6 或 4，最小值是 4。
+
+ 
+
+提示：
+
+    1 <= n <= 10^4
+    distance.length == n
+    0 <= start, destination < n
+    0 <= distance[i] <= 10^4
+
+解：
+求数组切片， 先求和，另一个相减就是
+```py
+class Solution:
+    def distanceBetweenBusStops(self, distance: List[int], start: int, destination: int) -> int:
+        s = sum(distance)
+        if start <= destination:
+            z = sum(distance[start:destination])
+            return min(z, s - z)
+        else:
+            y = sum(distance[destination:start])
+            return min(s - y, y)
+```
+---
+
+
+1184. 公交站间的距离    --4
+
+环形公交路线上有 n 个站，按次序从 0 到 n - 1 进行编号。我们已知每一对相邻公交站之间的距离，distance[i] 表示编号为 i 的车站和编号为 (i + 1) % n 的车站之间的距离。
+
+环线上的公交车都可以按顺时针和逆时针的方向行驶。
+
+返回乘客从出发点 start 到目的地 destination 之间的最短距离。
+
+ 
+
+示例 1：
+
+输入：distance = [1,2,3,4], start = 0, destination = 1
+输出：1
+解释：公交站 0 和 1 之间的距离是 1 或 9，最小值是 1。
+
+ 
+
+示例 2：
+
+输入：distance = [1,2,3,4], start = 0, destination = 2
+输出：3
+解释：公交站 0 和 2 之间的距离是 3 或 7，最小值是 3。
+
+ 
+
+示例 3：
+
+输入：distance = [1,2,3,4], start = 0, destination = 3
+输出：4
+解释：公交站 0 和 3 之间的距离是 6 或 4，最小值是 4。
+
+ 
+
+提示：
+
+    1 <= n <= 10^4
+    distance.length == n
+    0 <= start, destination < n
+    0 <= distance[i] <= 10^4
+
+解：
+求数组切片， 先求和，另一个相减就是 go语言版
+```go
+func distanceBetweenBusStops(distance []int, start int, destination int) int {
+    s := 0
+    for _, v := range distance{
+        s += v
+    }
+    ss := start
+    dd := destination
+    if start > destination{
+        ss = destination
+        dd = start
+    }
+    z := 0
+    for _, v := range distance[ss:dd]{
+        z += v
+    }
+    y := s - z
+    if z <= y{
+        return z
+    }else{
+        return y
+    }
+}
+```
+---
