@@ -1,0 +1,145 @@
+面试题 02.06. 回文链表
+编写一个函数，检查输入的链表是否是回文的。
+
+ 
+
+示例 1：
+
+输入： 1->2
+输出： false 
+示例 2：
+
+输入： 1->2->2->1
+输出： true 
+ 
+
+进阶：
+你能否用 O(n) 时间复杂度和 O(1) 空间复杂度解决此题？
+
+解：
+
+使用递归取出数组然后和相反数组比较
+
+```py
+# Definition for singly-linked list.
+# class ListNode:
+#     def __init__(self, x):
+#         self.val = x
+#         self.next = None
+class Solution:
+    def isPalindrome(self, head: ListNode) -> bool:
+        li = []
+        def f(node):
+            if not node:
+                return
+            li.append(node.val)
+            f(node.next)
+        f(head)
+        return li == li[::-1]
+```
+---
+
+
+面试题 02.06. 回文链表    --2
+编写一个函数，检查输入的链表是否是回文的。
+
+ 
+
+示例 1：
+
+输入： 1->2
+输出： false 
+示例 2：
+
+输入： 1->2->2->1
+输出： true 
+ 
+
+进阶：
+你能否用 O(n) 时间复杂度和 O(1) 空间复杂度解决此题？
+
+解：
+
+使用递归正序和倒序遍历，效率还低些，可能是因为在删除
+
+```py
+# Definition for singly-linked list.
+# class ListNode:
+#     def __init__(self, x):
+#         self.val = x
+#         self.next = None
+class Solution:
+    def isPalindrome(self, head: ListNode) -> bool:
+        li = []
+        def f(node):
+            if not node:
+                return
+            li.append(node.val)
+            f(node.next)
+            if node.val == li[0]:
+                li.pop(0)
+        f(head)
+        return len(li) == 0
+```
+---
+
+面试题 02.06. 回文链表    --3
+编写一个函数，检查输入的链表是否是回文的。
+
+ 
+
+示例 1：
+
+输入： 1->2
+输出： false 
+示例 2：
+
+输入： 1->2->2->1
+输出： true 
+ 
+
+进阶：
+你能否用 O(n) 时间复杂度和 O(1) 空间复杂度解决此题？
+
+解：
+
+go，使用快慢指针，90+
+
+```go
+/**
+ * Definition for singly-linked list.
+ * type ListNode struct {
+ *     Val int
+ *     Next *ListNode
+ * }
+ */
+func isPalindrome(head *ListNode) bool {
+    slow := head
+    fast := head
+    // 快慢指针找中点
+    for fast != nil && fast.Next != nil{
+        slow = slow.Next
+        fast = fast.Next.Next
+    }
+    // 反转后半部分
+    var pre *ListNode
+    for slow != nil{
+        next := slow.Next
+        slow.Next = pre
+        pre = slow
+        slow = next
+    }
+    // 前后两段比较是否一致
+    node := head
+    for pre != nil{
+        if pre.Val != node.Val{
+            return false
+        }
+        pre = pre.Next
+        node = node.Next
+    }
+    return true
+}
+```
+---
+

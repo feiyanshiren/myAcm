@@ -1,0 +1,100 @@
+剑指 Offer 29. 顺时针打印矩阵
+输入一个矩阵，按照从外向里以顺时针的顺序依次打印出每一个数字。
+
+ 
+
+示例 1：
+
+输入：matrix = [[1,2,3],[4,5,6],[7,8,9]]
+输出：[1,2,3,6,9,8,7,4,5]
+示例 2：
+
+输入：matrix = [[1,2,3,4],[5,6,7,8],[9,10,11,12]]
+输出：[1,2,3,4,8,12,11,10,9,5,6,7]
+ 
+
+限制：
+
+0 <= matrix.length <= 100
+0 <= matrix[i].length <= 100
+注意：本题与主站 54 题相同：https://leetcode-cn.com/problems/spiral-matrix/
+
+解：
+这道题要吐了，很多的判断会有错，需要细心，最后修改了表才弄出来，居然90+
+
+```py
+class Solution:
+    def spiralOrder(self, matrix: List[List[int]]) -> List[int]:
+        l1 = len(matrix)
+        if l1 == 0:
+            return []
+        l2 = len(matrix[0])
+        if l2 == 0:
+            return []
+        if l1 == 1:
+            return matrix[0]
+        if l2 == 1:
+            return [i[0] for i in matrix]
+        ss = []
+        while len(matrix) != 0:
+            for i in matrix[0]:
+                ss.append(i)
+            del matrix[0]
+            if len(matrix) != 0:
+                for i in range(len(matrix)):
+                    if len(matrix[i]) > 0:
+                        ss.append(matrix[i][len(matrix[i]) - 1])
+                        del matrix[i][len(matrix[i]) - 1]
+                if len(matrix) != 0:
+                    for i in range(len(matrix[len(matrix) - 1]) - 1, -1, -1):
+                        ss.append(matrix[len(matrix) - 1][i])
+                    del matrix[len(matrix) - 1]
+                    if len(matrix) != 0:
+                        for i in range(len(matrix) - 1, -1, -1):
+                            if len(matrix[i]) > 0:
+                                ss.append(matrix[i][0])
+                                del matrix[i][0]
+        return ss
+```
+---
+
+
+剑指 Offer 29. 顺时针打印矩阵    --2
+输入一个矩阵，按照从外向里以顺时针的顺序依次打印出每一个数字。
+
+ 
+
+示例 1：
+
+输入：matrix = [[1,2,3],[4,5,6],[7,8,9]]
+输出：[1,2,3,6,9,8,7,4,5]
+示例 2：
+
+输入：matrix = [[1,2,3,4],[5,6,7,8],[9,10,11,12]]
+输出：[1,2,3,4,8,12,11,10,9,5,6,7]
+ 
+
+限制：
+
+0 <= matrix.length <= 100
+0 <= matrix[i].length <= 100
+注意：本题与主站 54 题相同：https://leetcode-cn.com/problems/spiral-matrix/
+
+解：
+天秀
+沿主对角线对称+沿水平方向对称=将原矩阵逆时针旋转90度，所以每次只要pop出第一行就可以了
+class Solution:
+    def spiralOrder(self, matrix: List[List[int]]) -> List[int]:
+        result = []
+        while matrix:
+            result.extend(list(matrix.pop(0)))
+            matrix = list(zip(*matrix))
+            matrix.reverse()
+        return result
+
+```py
+class Solution:
+    def spiralOrder(self, matrix: List[List[int]]) -> List[int]:
+        return list(matrix[0]) + self.spiralOrder(list(zip(*matrix[1:]))[::-1]) if matrix else []
+```
+---

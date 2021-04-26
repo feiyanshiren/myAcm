@@ -1,0 +1,114 @@
+面试题 16.11. 跳水板
+你正在使用一堆木板建造跳水板。有两种类型的木板，其中长度较短的木板长度为shorter，长度较长的木板长度为longer。你必须正好使用k块木板。编写一个方法，生成跳水板所有可能的长度。
+
+返回的长度需要从小到大排列。
+
+示例 1
+
+输入：
+shorter = 1
+longer = 2
+k = 3
+输出： [3,4,5,6]
+解释：
+可以使用 3 次 shorter，得到结果 3；使用 2 次 shorter 和 1 次 longer，得到结果 4 。以此类推，得到最终结果。
+提示：
+
+0 < shorter <= longer
+0 <= k <= 100000
+
+解：
+遍历相加，注意最后去重排序
+
+```py
+class Solution:
+    def divingBoard(self, shorter: int, longer: int, k: int) -> List[int]:
+        if k == 0:
+            return []
+        res = set()
+        for i in range(k + 1):
+            res.add((k - i) * shorter + i * longer)
+        s = list(res)
+        s.sort()
+        return s
+```
+---
+
+面试题 16.11. 跳水板    --2
+你正在使用一堆木板建造跳水板。有两种类型的木板，其中长度较短的木板长度为shorter，长度较长的木板长度为longer。你必须正好使用k块木板。编写一个方法，生成跳水板所有可能的长度。
+
+返回的长度需要从小到大排列。
+
+示例 1
+
+输入：
+shorter = 1
+longer = 2
+k = 3
+输出： [3,4,5,6]
+解释：
+可以使用 3 次 shorter，得到结果 3；使用 2 次 shorter 和 1 次 longer，得到结果 4 。以此类推，得到最终结果。
+提示：
+
+0 < shorter <= longer
+0 <= k <= 100000
+
+解：
+遍历相加，不需要去重排序，只只需要排除k==0和shorter==longer的特殊情况，效率高很多。
+
+```py
+class Solution:
+    def divingBoard(self, shorter: int, longer: int, k: int) -> List[int]:
+        if k == 0:
+            return []
+        res = []
+        if shorter == longer:
+            return [k * shorter]
+        else:
+            for i in range(k + 1):
+                res.append((k - i) * shorter + i * longer)
+            return res
+```
+---
+
+
+面试题 16.11. 跳水板    --3
+你正在使用一堆木板建造跳水板。有两种类型的木板，其中长度较短的木板长度为shorter，长度较长的木板长度为longer。你必须正好使用k块木板。编写一个方法，生成跳水板所有可能的长度。
+
+返回的长度需要从小到大排列。
+
+示例 1
+
+输入：
+shorter = 1
+longer = 2
+k = 3
+输出： [3,4,5,6]
+解释：
+可以使用 3 次 shorter，得到结果 3；使用 2 次 shorter 和 1 次 longer，得到结果 4 。以此类推，得到最终结果。
+提示：
+
+0 < shorter <= longer
+0 <= k <= 100000
+
+解：
+遍历相加，不需要去重排序，只只需要排除k==0和shorter==longer的特殊情况，效率高很多。go语言版，提前定好数组长度好像要快点
+
+```go
+func divingBoard(shorter int, longer int, k int) []int {
+    var res []int
+    if k == 0{
+        return res
+    }
+    if shorter == longer{
+        return []int{k * shorter}
+    }
+    res = make([]int, k + 1)
+    for i := 0; i < k + 1; i ++{
+        res[i] = (k - i) * shorter + i * longer
+        // res = append(res, (k - i) * shorter + i * longer)
+    }
+    return res
+}
+```
+---
