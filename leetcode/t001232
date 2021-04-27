@@ -1,0 +1,102 @@
+1232. 缀点成线
+在一个 XY 坐标系中有一些点，我们用数组 coordinates 来分别记录它们的坐标，其中 coordinates[i] = [x, y] 表示横坐标为 x、纵坐标为 y 的点。
+
+请你来判断，这些点是否在该坐标系中属于同一条直线上，是则返回 true，否则请返回 false。
+
+ 
+
+示例 1：
+
+
+
+输入：coordinates = [[1,2],[2,3],[3,4],[4,5],[5,6],[6,7]]
+输出：true
+示例 2：
+
+
+
+输入：coordinates = [[1,1],[2,2],[3,4],[4,5],[5,6],[7,7]]
+输出：false
+ 
+
+提示：
+
+2 <= coordinates.length <= 1000
+coordinates[i].length == 2
+-10^4 <= coordinates[i][0], coordinates[i][1] <= 10^4
+coordinates 中不含重复的点
+
+解：
+使用叉积，注意排序
+```py
+class Solution:
+    def checkStraightLine(self, coordinates: List[List[int]]) -> bool:
+        l = len(coordinates)
+        coordinates.sort()
+        if l == 2:
+            return True
+        elif l < 2:
+            return False
+        else:
+            t = True
+            for i in range(1, l - 1):
+                if not self.ifOn(coordinates[0][0], coordinates[0][1], coordinates[l - 1][0], coordinates[l - 1][1], coordinates[i][0], coordinates[i][1]):
+                    return False
+            return True
+
+    def ifOn(self, x1, y1, x2, y2, x3, y3):
+        if (x3 - x1) * (y2 - y1) == (x2 - x1) * (y3 - y1) and min(x1, x2) <= x3 and x3 <= max(x1, x2) and min(y1, y2) <= y3 and y3 <= max(y1, y2):
+            return True
+        else:
+            return False
+```
+---
+
+
+1232. 缀点成线    --2
+在一个 XY 坐标系中有一些点，我们用数组 coordinates 来分别记录它们的坐标，其中 coordinates[i] = [x, y] 表示横坐标为 x、纵坐标为 y 的点。
+
+请你来判断，这些点是否在该坐标系中属于同一条直线上，是则返回 true，否则请返回 false。
+
+ 
+
+示例 1：
+
+
+
+输入：coordinates = [[1,2],[2,3],[3,4],[4,5],[5,6],[6,7]]
+输出：true
+示例 2：
+
+
+
+输入：coordinates = [[1,1],[2,2],[3,4],[4,5],[5,6],[7,7]]
+输出：false
+ 
+
+提示：
+
+2 <= coordinates.length <= 1000
+coordinates[i].length == 2
+-10^4 <= coordinates[i][0], coordinates[i][1] <= 10^4
+coordinates 中不含重复的点
+
+解：
+使用斜率，注意除以0
+由斜率公式得
+(y1-y0)/(x1-x0)=(yi-y0)/(xi-x0)
+防止除0，变换成相乘的形式
+(y1-y0)*(xi-x0)==(x1-x0)*(yi-y0)
+```py
+
+class Solution {
+public:
+    bool checkStraightLine(vector<vector<int>>& c) {
+        for(int i=2;i<c.size();i++)
+            if((c[1][1]-c[0][1])*(c[i][0]-c[0][0])!=(c[i][1]-c[0][1])*(c[1][0]-c[0][0]))
+                return false;
+        return true;
+    }
+};
+```
+---

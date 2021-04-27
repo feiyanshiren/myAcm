@@ -1,0 +1,117 @@
+面试题 05.01. 插入
+插入。给定两个32位的整数N与M，以及表示比特位置的i与j。编写一种方法，将M插入N，使得M从N的第j位开始，到第i位结束。假定从j位到i位足以容纳M，也即若M = 10 011，那么j和i之间至少可容纳5个位。例如，不可能出现j = 3和i = 2的情况，因为第3位和第2位之间放不下M。
+
+示例1:
+
+ 输入：N = 10000000000, M = 10011, i = 2, j = 6
+ 输出：N = 10001001100
+示例2:
+
+ 输入： N = 0, M = 11111, i = 0, j = 4
+ 输出：N = 11111
+ 
+ 解：
+ 转换成数组计算，但是注意两个表都有补零的情况
+ ```py
+ class Solution:
+    def insertBits(self, N: int, M: int, i: int, j: int) -> int:
+        n = bin(N)
+        m = bin(M)
+        list_n = list(n[2:])
+        list_m = list(m[2:])
+        lj_i = j - i
+        while len(list_n) <= j:
+            list_n.insert(0, "0")
+        while len(list_m) <= lj_i:
+            list_m.insert(0, "0")
+        l_n = len(list_n)
+        l = 0
+        jj = j + 1
+        if jj > l_n:
+            jj = l_n
+        len_m = len(list_m)
+        for k in range(l_n - jj, l_n - i):
+            list_n[k] = list_m[l]
+            l += 1
+        # print(list_n, list_m)
+        return int("".join(list_n) , 2)
+ ```
+ ---
+ 
+ 
+ 面试题 05.01. 插入    --2
+插入。给定两个32位的整数N与M，以及表示比特位置的i与j。编写一种方法，将M插入N，使得M从N的第j位开始，到第i位结束。假定从j位到i位足以容纳M，也即若M = 10 011，那么j和i之间至少可容纳5个位。例如，不可能出现j = 3和i = 2的情况，因为第3位和第2位之间放不下M。
+
+示例1:
+
+ 输入：N = 10000000000, M = 10011, i = 2, j = 6
+ 输出：N = 10001001100
+示例2:
+
+ 输入： N = 0, M = 11111, i = 0, j = 4
+ 输出：N = 11111
+ 
+ 解：
+先将N的i至j位置为0，然后将M左移i位后填入N的对应位置即可
+ ```py
+class Solution:
+    def insertBits(self, N: int, M: int, i: int, j: int) -> int:
+        N&=~(((1<<(j-i+1))-1)<<i)
+        return N|(M<<i) 
+ ```
+ ---
+ 
+
+1232. 缀点成线
+在一个 XY 坐标系中有一些点，我们用数组 coordinates 来分别记录它们的坐标，其中 coordinates[i] = [x, y] 表示横坐标为 x、纵坐标为 y 的点。
+
+请你来判断，这些点是否在该坐标系中属于同一条直线上，是则返回 true，否则请返回 false。
+
+ 
+
+示例 1：
+
+
+
+输入：coordinates = [[1,2],[2,3],[3,4],[4,5],[5,6],[6,7]]
+输出：true
+示例 2：
+
+
+
+输入：coordinates = [[1,1],[2,2],[3,4],[4,5],[5,6],[7,7]]
+输出：false
+ 
+
+提示：
+
+2 <= coordinates.length <= 1000
+coordinates[i].length == 2
+-10^4 <= coordinates[i][0], coordinates[i][1] <= 10^4
+coordinates 中不含重复的点
+
+解：
+使用叉积，注意排序
+```py
+class Solution:
+    def checkStraightLine(self, coordinates: List[List[int]]) -> bool:
+        l = len(coordinates)
+        coordinates.sort()
+        if l == 2:
+            return True
+        elif l < 2:
+            return False
+        else:
+            t = True
+            for i in range(1, l - 1):
+                if not self.ifOn(coordinates[0][0], coordinates[0][1], coordinates[l - 1][0], coordinates[l - 1][1], coordinates[i][0], coordinates[i][1]):
+                    return False
+            return True
+
+    def ifOn(self, x1, y1, x2, y2, x3, y3):
+        if (x3 - x1) * (y2 - y1) == (x2 - x1) * (y3 - y1) and min(x1, x2) <= x3 and x3 <= max(x1, x2) and min(y1, y2) <= y3 and y3 <= max(y1, y2):
+            return True
+        else:
+            return False
+```
+---
