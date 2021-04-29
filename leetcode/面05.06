@@ -1,0 +1,71 @@
+面试题 05.06. 整数转换
+整数转换。编写一个函数，确定需要改变几个位才能将整数A转成整数B。
+
+示例1:
+
+ 输入：A = 29 （或者0b11101）, B = 15（或者0b01111）
+ 输出：2
+示例2:
+
+ 输入：A = 1，B = 2
+ 输出：2
+提示:
+
+A，B范围在[-2147483648, 2147483647]之间
+
+解：
+转换二进制，然后对齐，逐个比较,注意Python 的负数转二进制需要补码
+
+```py
+class Solution:
+    def convertInteger(self, A: int, B: int) -> int:
+        if A < 0:
+            A = A & 0xffffffff
+        if B < 0:
+            B = B & 0xffffffff
+        a = bin(A)[2:]
+        b = bin(B)[2:]
+        la = len(a)
+        lb = len(b)
+        if la > lb:
+            while len(b) < la:
+                b = "0" + b
+        else:
+            while len(a) < lb:
+                a = "0" + a
+        how = 0
+        for i in range(len(a)):
+            if a[i] != b[i]:
+                how += 1
+        # print(a, b)
+        return how
+
+# 通过bin(n & 0xffffffff)来获得负数的补码
+```
+---
+
+
+面试题 05.06. 整数转换    --2
+整数转换。编写一个函数，确定需要改变几个位才能将整数A转成整数B。
+
+示例1:
+
+ 输入：A = 29 （或者0b11101）, B = 15（或者0b01111）
+ 输出：2
+示例2:
+
+ 输入：A = 1，B = 2
+ 输出：2
+提示:
+
+A，B范围在[-2147483648, 2147483647]之间
+
+解：
+异或，然后统计1的个数
+
+```py
+class Solution:
+    def convertInteger(self, A: int, B: int) -> int:
+       return bin((A ^ B) & 0xffffffff).count('1')
+```
+---
