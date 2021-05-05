@@ -1,0 +1,99 @@
+1287. 有序数组中出现次数超过25%的元素
+给你一个非递减的 有序 整数数组，已知这个数组中恰好有一个整数，它的出现次数超过数组元素总数的 25%。
+
+请你找到并返回这个整数
+
+ 
+
+示例：
+
+输入：arr = [1,2,2,6,6,6,6,7,10]
+输出：6
+ 
+
+提示：
+
+1 <= arr.length <= 10^4
+0 <= arr[i] <= 10^5
+
+解：
+使用 counter, 效率低
+```py
+import collections
+
+class Solution:
+    def findSpecialInteger(self, arr: List[int]) -> int:
+        z = len(arr)
+        m = dict(collections.Counter(arr))
+        for k, v in m.items():
+            if z / v < 4:
+                return k
+        return None
+```
+---
+
+
+1287. 有序数组中出现次数超过25%的元素    --2
+给你一个非递减的 有序 整数数组，已知这个数组中恰好有一个整数，它的出现次数超过数组元素总数的 25%。
+
+请你找到并返回这个整数
+
+ 
+
+示例：
+
+输入：arr = [1,2,2,6,6,6,6,7,10]
+输出：6
+ 
+
+提示：
+
+1 <= arr.length <= 10^4
+0 <= arr[i] <= 10^5
+
+解：
+因为是排好序的，所以直接滑窗测试一定长度两端的值是否相等。
+```py
+class Solution:
+    def findSpecialInteger(self, arr: List[int]) -> int:
+        z = len(arr)
+        the_len = z // 4
+        for i in range(0, z - the_len):
+            if (arr[i] == arr[i + the_len]):
+                return arr[i]
+        return None
+```
+---
+
+
+1287. 有序数组中出现次数超过25%的元素    --3
+给你一个非递减的 有序 整数数组，已知这个数组中恰好有一个整数，它的出现次数超过数组元素总数的 25%。
+
+请你找到并返回这个整数
+
+ 
+
+示例：
+
+输入：arr = [1,2,2,6,6,6,6,7,10]
+输出：6
+ 
+
+提示：
+
+1 <= arr.length <= 10^4
+0 <= arr[i] <= 10^5
+
+解：
+因为是排好序的，所以直接滑窗测试一定长度两端的值是否相等。 lisp版本
+```lisp
+#lang racket
+(define (findSpecialInteger arr)
+  (define len_arr (length arr))
+  (define len_end  (floor (/ len_arr 4)))
+  (for/first ([i (in-range 0 (- len_arr len_end))]
+        #:when (= (list-ref arr i) (list-ref arr (+ i len_end))))
+    (println (list-ref arr i))
+    ))
+```
+---
