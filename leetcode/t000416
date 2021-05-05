@@ -1,0 +1,103 @@
+416. 分割等和子集
+给定一个只包含正整数的非空数组。是否可以将这个数组分割成两个子集，使得两个子集的元素和相等。
+
+注意:
+
+每个数组中的元素不会超过 100
+数组的大小不会超过 200
+示例 1:
+
+输入: [1, 5, 11, 5]
+
+输出: true
+
+解释: 数组可以分割成 [1, 5, 5] 和 [11].
+ 
+
+示例 2:
+
+输入: [1, 2, 3, 5]
+
+输出: false
+
+解释: 数组不能分割成两个元素和相等的子集.
+
+解：
+使用combinations 组合暴力 超时
+```py
+import itertools
+
+class Solution:
+    def canPartition(self, nums: List[int]) -> bool:
+        l = len(nums)
+        if l == 1:
+            return False
+        elif l == 0:
+            return True
+        elif l == 2:
+            return nums[0] == nums[1]
+        else:
+            sum1 = sum(nums)
+            for i in range(l // 2):
+                a = itertools.combinations(nums, i + 1)
+                a = [sum(j) for j in a]
+                for j in a:
+                    if 2 * j == sum1:
+                        return True
+            return False
+```
+---
+
+
+416. 分割等和子集    --2
+给定一个只包含正整数的非空数组。是否可以将这个数组分割成两个子集，使得两个子集的元素和相等。
+
+注意:
+
+每个数组中的元素不会超过 100
+数组的大小不会超过 200
+示例 1:
+
+输入: [1, 5, 11, 5]
+
+输出: true
+
+解释: 数组可以分割成 [1, 5, 5] 和 [11].
+ 
+
+示例 2:
+
+输入: [1, 2, 3, 5]
+
+输出: false
+
+解释: 数组不能分割成两个元素和相等的子集.
+
+解：
+结果是 背包问题。下来还要在看看书才行。
+```py
+class Solution:
+    def canPartition(self, nums: List[int]) -> bool:
+        l = len(nums)
+        if l == 1:
+            return False
+        elif l == 0:
+            return True
+        elif l == 2:
+            return nums[0] == nums[1]
+        else:
+            sum1 = sum(nums)
+            if sum1 % 2 == 0:
+                sum1 = sum(nums)
+                m = sum1 // 2
+                b = [False for i in range(m + 1)]
+                b[0] = True
+                for i in nums:
+                    for j in range(m, i - 1,-1):
+                        b[j] |= b[j - i]
+                return b[m]
+                
+            else:
+                return False
+```
+---

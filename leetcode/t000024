@@ -1,0 +1,88 @@
+24. 两两交换链表中的节点
+给定一个链表，两两交换其中相邻的节点，并返回交换后的链表。
+
+你不能只是单纯的改变节点内部的值，而是需要实际的进行节点交换。
+
+ 
+
+示例:
+
+给定 1->2->3->4, 你应该返回 2->1->4->3.
+
+
+解:
+转数组，交换，再转回来
+
+```py
+# Definition for singly-linked list.
+# class ListNode:
+#     def __init__(self, val=0, next=None):
+#         self.val = val
+#         self.next = next
+class Solution:
+    def swapPairs(self, head: ListNode) -> ListNode:
+        a = []
+        def f(node):
+            if not node:
+                return
+            a.append(node.val)
+            f(node.next)
+        f(head)
+        l = len(a)
+        if l == 0:
+            return None
+        if l % 2 == 0:
+            for i in range(0, len(a), 2):
+                a[i], a[i + 1] = a[i + 1], a[i]
+        else:
+            for i in range(0, len(a) - 1, 2):
+                a[i], a[i + 1] = a[i + 1], a[i]
+        res = ListNode(a[0])
+        r = res
+        for i in range(1, l):
+            r.next = ListNode(a[i])
+            r = r.next
+        return res
+```
+---
+
+
+24. 两两交换链表中的节点   --2
+给定一个链表，两两交换其中相邻的节点，并返回交换后的链表。
+
+你不能只是单纯的改变节点内部的值，而是需要实际的进行节点交换。
+
+ 
+
+示例:
+
+给定 1->2->3->4, 你应该返回 2->1->4->3.
+
+
+解:
+自己的纯递归办，要注意单数的条件，91+
+
+```py
+# Definition for singly-linked list.
+# class ListNode:
+#     def __init__(self, val=0, next=None):
+#         self.val = val
+#         self.next = next
+class Solution:
+    def swapPairs(self, head: ListNode) -> ListNode:
+        res = ListNode()
+        self.tmp = res
+        def f(node):
+            if not node:
+                return
+            elif node and not node.next:
+                self.tmp.next = ListNode(node.val)
+                return
+            self.tmp.next = ListNode(node.next.val)
+            self.tmp.next.next = ListNode(node.val)
+            self.tmp = self.tmp.next.next
+            f(node.next.next)
+        f(head)
+        return res.next
+```
+---
