@@ -1,0 +1,100 @@
+1812. 判断国际象棋棋盘中一个格子的颜色
+
+给你一个坐标 coordinates ，它是一个字符串，表示国际象棋棋盘中一个格子的坐标。下图是国际象棋棋盘示意图。
+
+如果所给格子的颜色是白色，请你返回 true，如果是黑色，请返回 false 。
+
+给定坐标一定代表国际象棋棋盘上一个存在的格子。坐标第一个字符是字母，第二个字符是数字。
+
+ 
+
+示例 1：
+
+输入：coordinates = "a1"
+输出：false
+解释：如上图棋盘所示，"a1" 坐标的格子是黑色的，所以返回 false 。
+
+示例 2：
+
+输入：coordinates = "h3"
+输出：true
+解释：如上图棋盘所示，"h3" 坐标的格子是白色的，所以返回 true 。
+
+示例 3：
+
+输入：coordinates = "c7"
+输出：false
+
+ 
+
+提示：
+
+    coordinates.length == 2
+    'a' <= coordinates[0] <= 'h'
+    '1' <= coordinates[1] <= '8'
+
+
+解：打表
+
+```py
+class Solution:
+    def squareIsWhite(self, coordinates: str) -> bool:
+        mm = {
+            "a1": False, "a2": True, "a3": False, "a4": True, "a5": False, "a6": True, "a7": False, "a8": True,
+            "b1": True, "b2": False, "b3": True, "b4": False, "b5": True, "b6": False, "b7": True, "b8": False,
+            "c1": False, "c2": True, "c3": False, "c4": True, "c5": False, "c6": True, "c7": False, "c8": True,
+            "d1": True, "d2": False, "d3": True, "d4": False, "d5": True, "d6": False, "d7": True, "d8": False,
+            "e1": False, "e2": True, "e3": False, "e4": True, "e5": False, "e6": True, "e7": False, "e8": True,
+            "f1": True, "f2": False, "f3": True, "f4": False, "f5": True, "f6": False, "f7": True, "f8": False,
+            "g1": False, "g2": True, "g3": False, "g4": True, "g5": False, "g6": True, "g7": False, "g8": True,
+            "h1": True, "h2": False, "h3": True, "h4": False, "h5": True, "h6": False, "h7": True, "h8": False,
+        }
+        return mm[coordinates]
+```
+---
+
+1812. 判断国际象棋棋盘中一个格子的颜色    --2
+
+给你一个坐标 coordinates ，它是一个字符串，表示国际象棋棋盘中一个格子的坐标。下图是国际象棋棋盘示意图。
+
+如果所给格子的颜色是白色，请你返回 true，如果是黑色，请返回 false 。
+
+给定坐标一定代表国际象棋棋盘上一个存在的格子。坐标第一个字符是字母，第二个字符是数字。
+
+ 
+
+示例 1：
+
+输入：coordinates = "a1"
+输出：false
+解释：如上图棋盘所示，"a1" 坐标的格子是黑色的，所以返回 false 。
+
+示例 2：
+
+输入：coordinates = "h3"
+输出：true
+解释：如上图棋盘所示，"h3" 坐标的格子是白色的，所以返回 true 。
+
+示例 3：
+
+输入：coordinates = "c7"
+输出：false
+
+ 
+
+提示：
+
+    coordinates.length == 2
+    'a' <= coordinates[0] <= 'h'
+    '1' <= coordinates[1] <= '8'
+
+
+解：
+一行，求余数
+
+```py
+class Solution:
+    def squareIsWhite(self, coordinates: str) -> bool:
+        return ord(coordinates[0]) % 2 + ord(coordinates[1]) % 2 == 1
+```
+---
