@@ -1,0 +1,318 @@
+1971. Find if Path Exists in Graph
+There is a bi-directional graph with n vertices, where each vertex is labeled from 0 to n - 1 (inclusive). The edges in the graph are represented as a 2D integer array edges, where each edges[i] = [ui, vi] denotes a bi-directional edge between vertex ui and vertex vi. Every vertex pair is connected by at most one edge, and no vertex has an edge to itself.
+
+You want to determine if there is a valid path that exists from vertex start to vertex end.
+
+Given edges and the integers n, start, and end, return true if there is a valid path from start to end, or false otherwise.
+
+ 
+
+Example 1:
+
+
+Input: n = 3, edges = [[0,1],[1,2],[2,0]], start = 0, end = 2
+Output: true
+Explanation: There are two paths from vertex 0 to vertex 2:
+- 0 → 1 → 2
+- 0 → 2
+Example 2:
+
+
+Input: n = 6, edges = [[0,1],[0,2],[3,5],[5,4],[4,3]], start = 0, end = 5
+Output: false
+Explanation: There is no path from vertex 0 to vertex 5.
+ 
+
+Constraints:
+
+1 <= n <= 2 * 105
+0 <= edges.length <= 2 * 105
+edges[i].length == 2
+1 <= ui, vi <= n - 1
+ui != vi
+1 <= start, end <= n - 1
+There are no duplicate edges.
+There are no self edges.
+
+
+解：
+使用一个模拟栈，注意题目是双向的，第一次做的时候以为是单向就错了，双向注意是否查询过以免无限循环 然后特殊处理 空的情况
+
+```py
+class Solution:
+    def validPath(self, n: int, edges: List[List[int]], start: int, end: int) -> bool:
+        if len(edges) == 0:
+            return True
+        a = start
+        aa = []
+        for i in edges:
+            if i[0] == a:
+                if i[1] == end:
+                    return True
+                if i[1] not in aa:
+                    aa.append(i[1])
+            if i[1] == a:
+                if i[0] == end:
+                    return True
+                if i[0] not in aa:
+                    aa.append(i[0])
+        bb = aa[:]
+        while len(aa) > 0:
+            a = aa.pop(0)
+            for i in edges:
+                if i[0] == a:
+                    if i[1] == end:
+                        return True
+                    if i[1] not in bb:
+                        aa.append(i[1])
+                        bb.append(i[1])
+                if i[1] == a:
+                    if i[0] == end:
+                        return True
+                    if i[0] not in bb:
+                        aa.append(i[0])
+                        bb.append(i[0])
+        return False
+```
+
+---
+
+
+
+1971. Find if Path Exists in Graph    --2
+There is a bi-directional graph with n vertices, where each vertex is labeled from 0 to n - 1 (inclusive). The edges in the graph are represented as a 2D integer array edges, where each edges[i] = [ui, vi] denotes a bi-directional edge between vertex ui and vertex vi. Every vertex pair is connected by at most one edge, and no vertex has an edge to itself.
+
+You want to determine if there is a valid path that exists from vertex start to vertex end.
+
+Given edges and the integers n, start, and end, return true if there is a valid path from start to end, or false otherwise.
+
+ 
+
+Example 1:
+
+
+Input: n = 3, edges = [[0,1],[1,2],[2,0]], start = 0, end = 2
+Output: true
+Explanation: There are two paths from vertex 0 to vertex 2:
+- 0 → 1 → 2
+- 0 → 2
+Example 2:
+
+
+Input: n = 6, edges = [[0,1],[0,2],[3,5],[5,4],[4,3]], start = 0, end = 5
+Output: false
+Explanation: There is no path from vertex 0 to vertex 5.
+ 
+
+Constraints:
+
+1 <= n <= 2 * 105
+0 <= edges.length <= 2 * 105
+edges[i].length == 2
+1 <= ui, vi <= n - 1
+ui != vi
+1 <= start, end <= n - 1
+There are no duplicate edges.
+There are no self edges.
+
+
+解：
+使用递归，使用集合运算，倒计时超时了。
+
+```py
+class Solution:
+    def validPath(self, n: int, edges: List[List[int]], start: int, end: int) -> bool:
+        l = len(edges)
+        if l == 0:
+            return True
+
+        e2 = [set(i) for i in edges]
+        def f(e2):
+            ll = len(e2)
+            for i in range(ll):
+                for j in range(ll):
+                    if i != j:
+                        if e2[i] & e2[j]:
+                            e2[i] =  e2[i] | e2[j]
+                            del e2[j]
+                            f(e2)
+                            return
+        f(e2)
+        for i in e2:
+            if start in i and end in i:
+                return True
+        return False
+```
+
+---
+
+
+
+
+1971. Find if Path Exists in Graph    --3
+There is a bi-directional graph with n vertices, where each vertex is labeled from 0 to n - 1 (inclusive). The edges in the graph are represented as a 2D integer array edges, where each edges[i] = [ui, vi] denotes a bi-directional edge between vertex ui and vertex vi. Every vertex pair is connected by at most one edge, and no vertex has an edge to itself.
+
+You want to determine if there is a valid path that exists from vertex start to vertex end.
+
+Given edges and the integers n, start, and end, return true if there is a valid path from start to end, or false otherwise.
+
+ 
+
+Example 1:
+
+
+Input: n = 3, edges = [[0,1],[1,2],[2,0]], start = 0, end = 2
+Output: true
+Explanation: There are two paths from vertex 0 to vertex 2:
+- 0 → 1 → 2
+- 0 → 2
+Example 2:
+
+
+Input: n = 6, edges = [[0,1],[0,2],[3,5],[5,4],[4,3]], start = 0, end = 5
+Output: false
+Explanation: There is no path from vertex 0 to vertex 5.
+ 
+
+Constraints:
+
+1 <= n <= 2 * 105
+0 <= edges.length <= 2 * 105
+edges[i].length == 2
+1 <= ui, vi <= n - 1
+ui != vi
+1 <= start, end <= n - 1
+There are no duplicate edges.
+There are no self edges.
+
+
+解：
+使用一个模拟栈，注意题目是双向的，第一次做的时候以为是单向就错了，双向注意是否查询过以免无限循环 然后特殊处理 空的情况
+使用set 要快一些
+
+```py
+class Solution:
+    def validPath(self, n: int, edges: List[List[int]], start: int, end: int) -> bool:
+        if len(edges) == 0:
+            return True
+        a = start
+        aa = set()
+        for i in edges:
+            if i[0] == a:
+                if i[1] == end:
+                    return True
+                aa.add(i[1])
+            if i[1] == a:
+                if i[0] == end:
+                    return True
+                aa.add(i[0])
+        bb = set(aa)
+        while len(aa) > 0:
+            a = aa.pop()
+            for i in edges:
+                if i[0] == a:
+                    if i[1] == end:
+                        return True
+                    if i[1] not in bb:
+                        aa.add(i[1])
+                        bb.add(i[1])
+                if i[1] == a:
+                    if i[0] == end:
+                        return True
+                    if i[0] not in bb:
+                        aa.add(i[0])
+                        bb.add(i[0])
+        return False
+```
+
+---
+
+
+
+1971. Find if Path Exists in Graph    --4
+There is a bi-directional graph with n vertices, where each vertex is labeled from 0 to n - 1 (inclusive). The edges in the graph are represented as a 2D integer array edges, where each edges[i] = [ui, vi] denotes a bi-directional edge between vertex ui and vertex vi. Every vertex pair is connected by at most one edge, and no vertex has an edge to itself.
+
+You want to determine if there is a valid path that exists from vertex start to vertex end.
+
+Given edges and the integers n, start, and end, return true if there is a valid path from start to end, or false otherwise.
+
+ 
+
+Example 1:
+
+
+Input: n = 3, edges = [[0,1],[1,2],[2,0]], start = 0, end = 2
+Output: true
+Explanation: There are two paths from vertex 0 to vertex 2:
+- 0 → 1 → 2
+- 0 → 2
+Example 2:
+
+
+Input: n = 6, edges = [[0,1],[0,2],[3,5],[5,4],[4,3]], start = 0, end = 5
+Output: false
+Explanation: There is no path from vertex 0 to vertex 5.
+ 
+
+Constraints:
+
+1 <= n <= 2 * 105
+0 <= edges.length <= 2 * 105
+edges[i].length == 2
+1 <= ui, vi <= n - 1
+ui != vi
+1 <= start, end <= n - 1
+There are no duplicate edges.
+There are no self edges.
+
+
+解：
+使用一个模拟栈，注意题目是双向的，第一次做的时候以为是单向就错了，双向注意是否查询过以免无限循环 然后特殊处理 空的情况
+使用set 要快一些, 去掉多余的edges还要快点
+
+```py
+class Solution:
+    def validPath(self, n: int, edges: List[List[int]], start: int, end: int) -> bool:
+        l = len(edges)
+        if l == 0:
+            return True
+        a = start
+        aa = set()
+        j = 0
+        list_dg = set()
+        for i in edges:
+            if i[0] == a:
+                if i[1] == end:
+                    return True
+                aa.add(i[1])
+                list_dg.add(j)
+            if i[1] == a:
+                if i[0] == end:
+                    return True
+                aa.add(i[0])
+                list_dg.add(j)
+            j += 1
+        bb = set(aa)
+        edges2 = []
+        for i in range(l):
+            if i not in list_dg:
+                edges2.append(edges[i])
+        while len(aa) > 0:
+            a = aa.pop()
+            for i in edges2:
+                if i[0] == a:
+                    if i[1] == end:
+                        return True
+                    if i[1] not in bb:
+                        aa.add(i[1])
+                        bb.add(i[1])
+                if i[1] == a:
+                    if i[0] == end:
+                        return True
+                    if i[0] not in bb:
+                        aa.add(i[0])
+                        bb.add(i[0])
+        return False
+```
+
+---
