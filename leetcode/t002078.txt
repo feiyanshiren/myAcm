@@ -1,0 +1,370 @@
+2078. 两栋颜色不同且距离最远的房子
+街上有 n 栋房子整齐地排成一列，每栋房子都粉刷上了漂亮的颜色。给你一个下标从 0 开始且长度为 n 的整数数组 colors ，其中 colors[i] 表示第  i 栋房子的颜色。
+
+返回 两栋 颜色 不同 房子之间的 最大 距离。
+
+第 i 栋房子和第 j 栋房子之间的距离是 abs(i - j) ，其中 abs(x) 是 x 的绝对值。
+
+ 
+
+示例 1：
+
+
+
+输入：colors = [1,1,1,6,1,1,1]
+输出：3
+解释：上图中，颜色 1 标识成蓝色，颜色 6 标识成红色。
+两栋颜色不同且距离最远的房子是房子 0 和房子 3 。
+房子 0 的颜色是颜色 1 ，房子 3 的颜色是颜色 6 。两栋房子之间的距离是 abs(0 - 3) = 3 。
+注意，房子 3 和房子 6 也可以产生最佳答案。
+示例 2：
+
+
+
+输入：colors = [1,8,3,8,3]
+输出：4
+解释：上图中，颜色 1 标识成蓝色，颜色 8 标识成黄色，颜色 3 标识成绿色。
+两栋颜色不同且距离最远的房子是房子 0 和房子 4 。
+房子 0 的颜色是颜色 1 ，房子 4 的颜色是颜色 3 。两栋房子之间的距离是 abs(0 - 4) = 4 。
+示例 3：
+
+输入：colors = [0,1]
+输出：1
+解释：两栋颜色不同且距离最远的房子是房子 0 和房子 1 。
+房子 0 的颜色是颜色 0 ，房子 1 的颜色是颜色 1 。两栋房子之间的距离是 abs(0 - 1) = 1 。
+ 
+
+提示：
+
+n == colors.length
+2 <= n <= 100
+0 <= colors[i] <= 100
+生成的测试数据满足 至少 存在 2 栋颜色不同的房子
+
+解：
+最优解<left, right>
+一端一定在边界上，即left == 0 或 right == n-1
+证明：假设都不在边界上
+---left ---- right ---
+记s[left]为s1, 记s[right]为s2, []为s[left], s[right]所在的位置
+s1 s1 s1 [s1] ----- [s2] s2 s2 s2
+显然存在更优的解
+
+87+ 
+
+```py
+class Solution:
+    def maxDistance(self, colors: List[int]) -> int:
+        len_colors = len(colors)
+        right = len_colors - 1
+        left = 0
+        while right >=0 and colors[right] == colors[0]:
+            right -= 1
+        while left < len_colors and colors[left] == colors[len_colors - 1]:
+            left += 1
+        return max(right, len_colors - left - 1)
+```
+---
+
+
+2078. 两栋颜色不同且距离最远的房子    --2
+街上有 n 栋房子整齐地排成一列，每栋房子都粉刷上了漂亮的颜色。给你一个下标从 0 开始且长度为 n 的整数数组 colors ，其中 colors[i] 表示第  i 栋房子的颜色。
+
+返回 两栋 颜色 不同 房子之间的 最大 距离。
+
+第 i 栋房子和第 j 栋房子之间的距离是 abs(i - j) ，其中 abs(x) 是 x 的绝对值。
+
+ 
+
+示例 1：
+
+
+
+输入：colors = [1,1,1,6,1,1,1]
+输出：3
+解释：上图中，颜色 1 标识成蓝色，颜色 6 标识成红色。
+两栋颜色不同且距离最远的房子是房子 0 和房子 3 。
+房子 0 的颜色是颜色 1 ，房子 3 的颜色是颜色 6 。两栋房子之间的距离是 abs(0 - 3) = 3 。
+注意，房子 3 和房子 6 也可以产生最佳答案。
+示例 2：
+
+
+
+输入：colors = [1,8,3,8,3]
+输出：4
+解释：上图中，颜色 1 标识成蓝色，颜色 8 标识成黄色，颜色 3 标识成绿色。
+两栋颜色不同且距离最远的房子是房子 0 和房子 4 。
+房子 0 的颜色是颜色 1 ，房子 4 的颜色是颜色 3 。两栋房子之间的距离是 abs(0 - 4) = 4 。
+示例 3：
+
+输入：colors = [0,1]
+输出：1
+解释：两栋颜色不同且距离最远的房子是房子 0 和房子 1 。
+房子 0 的颜色是颜色 0 ，房子 1 的颜色是颜色 1 。两栋房子之间的距离是 abs(0 - 1) = 1 。
+ 
+
+提示：
+
+n == colors.length
+2 <= n <= 100
+0 <= colors[i] <= 100
+生成的测试数据满足 至少 存在 2 栋颜色不同的房子
+
+解：
+最优解<left, right>
+一端一定在边界上，即left == 0 或 right == n-1
+证明：假设都不在边界上
+---left ---- right ---
+记s[left]为s1, 记s[right]为s2, []为s[left], s[right]所在的位置
+s1 s1 s1 [s1] ----- [s2] s2 s2 s2
+显然存在更优的解
+
+c++
+100+
+
+```cpp
+class Solution {
+public:
+    int maxDistance(vector<int>& colors) {
+        int len_colors = colors.size();
+        int right = len_colors - 1;
+        int left = 0;
+        while (right >= 0 && colors[right] == colors[0]){
+            right -= 1;
+        }
+        while (left < len_colors && colors[left] == colors[len_colors - 1]){
+            left += 1;
+        }
+        return max(right, len_colors - left - 1);
+    }
+};
+```
+---
+
+
+
+2078. 两栋颜色不同且距离最远的房子    --3
+街上有 n 栋房子整齐地排成一列，每栋房子都粉刷上了漂亮的颜色。给你一个下标从 0 开始且长度为 n 的整数数组 colors ，其中 colors[i] 表示第  i 栋房子的颜色。
+
+返回 两栋 颜色 不同 房子之间的 最大 距离。
+
+第 i 栋房子和第 j 栋房子之间的距离是 abs(i - j) ，其中 abs(x) 是 x 的绝对值。
+
+ 
+
+示例 1：
+
+
+
+输入：colors = [1,1,1,6,1,1,1]
+输出：3
+解释：上图中，颜色 1 标识成蓝色，颜色 6 标识成红色。
+两栋颜色不同且距离最远的房子是房子 0 和房子 3 。
+房子 0 的颜色是颜色 1 ，房子 3 的颜色是颜色 6 。两栋房子之间的距离是 abs(0 - 3) = 3 。
+注意，房子 3 和房子 6 也可以产生最佳答案。
+示例 2：
+
+
+
+输入：colors = [1,8,3,8,3]
+输出：4
+解释：上图中，颜色 1 标识成蓝色，颜色 8 标识成黄色，颜色 3 标识成绿色。
+两栋颜色不同且距离最远的房子是房子 0 和房子 4 。
+房子 0 的颜色是颜色 1 ，房子 4 的颜色是颜色 3 。两栋房子之间的距离是 abs(0 - 4) = 4 。
+示例 3：
+
+输入：colors = [0,1]
+输出：1
+解释：两栋颜色不同且距离最远的房子是房子 0 和房子 1 。
+房子 0 的颜色是颜色 0 ，房子 1 的颜色是颜色 1 。两栋房子之间的距离是 abs(0 - 1) = 1 。
+ 
+
+提示：
+
+n == colors.length
+2 <= n <= 100
+0 <= colors[i] <= 100
+生成的测试数据满足 至少 存在 2 栋颜色不同的房子
+
+解：
+最优解<left, right>
+一端一定在边界上，即left == 0 或 right == n-1
+证明：假设都不在边界上
+---left ---- right ---
+记s[left]为s1, 记s[right]为s2, []为s[left], s[right]所在的位置
+s1 s1 s1 [s1] ----- [s2] s2 s2 s2
+显然存在更优的解
+
+java
+100+
+
+```java
+class Solution {
+    public int maxDistance(int[] colors) {
+        int len_colors = colors.length;
+        int right = len_colors - 1;
+        int left = 0;
+        while (right >= 0 && colors[right] == colors[0]){
+            right -= 1;
+        }
+        while (left < len_colors && colors[left] == colors[len_colors - 1]){
+            left += 1;
+        }
+        return Math.max(right, len_colors - left - 1);
+    }
+}
+```
+---
+
+
+2078. 两栋颜色不同且距离最远的房子    --4
+街上有 n 栋房子整齐地排成一列，每栋房子都粉刷上了漂亮的颜色。给你一个下标从 0 开始且长度为 n 的整数数组 colors ，其中 colors[i] 表示第  i 栋房子的颜色。
+
+返回 两栋 颜色 不同 房子之间的 最大 距离。
+
+第 i 栋房子和第 j 栋房子之间的距离是 abs(i - j) ，其中 abs(x) 是 x 的绝对值。
+
+ 
+
+示例 1：
+
+
+
+输入：colors = [1,1,1,6,1,1,1]
+输出：3
+解释：上图中，颜色 1 标识成蓝色，颜色 6 标识成红色。
+两栋颜色不同且距离最远的房子是房子 0 和房子 3 。
+房子 0 的颜色是颜色 1 ，房子 3 的颜色是颜色 6 。两栋房子之间的距离是 abs(0 - 3) = 3 。
+注意，房子 3 和房子 6 也可以产生最佳答案。
+示例 2：
+
+
+
+输入：colors = [1,8,3,8,3]
+输出：4
+解释：上图中，颜色 1 标识成蓝色，颜色 8 标识成黄色，颜色 3 标识成绿色。
+两栋颜色不同且距离最远的房子是房子 0 和房子 4 。
+房子 0 的颜色是颜色 1 ，房子 4 的颜色是颜色 3 。两栋房子之间的距离是 abs(0 - 4) = 4 。
+示例 3：
+
+输入：colors = [0,1]
+输出：1
+解释：两栋颜色不同且距离最远的房子是房子 0 和房子 1 。
+房子 0 的颜色是颜色 0 ，房子 1 的颜色是颜色 1 。两栋房子之间的距离是 abs(0 - 1) = 1 。
+ 
+
+提示：
+
+n == colors.length
+2 <= n <= 100
+0 <= colors[i] <= 100
+生成的测试数据满足 至少 存在 2 栋颜色不同的房子
+
+解：
+最优解<left, right>
+一端一定在边界上，即left == 0 或 right == n-1
+证明：假设都不在边界上
+---left ---- right ---
+记s[left]为s1, 记s[right]为s2, []为s[left], s[right]所在的位置
+s1 s1 s1 [s1] ----- [s2] s2 s2 s2
+显然存在更优的解
+
+javascript
+84+
+
+```js
+/**
+ * @param {number[]} colors
+ * @return {number}
+ */
+var maxDistance = function(colors) {
+    len_colors = colors.length;
+    right = len_colors - 1;
+    left = 0;
+    while (right >= 0 && colors[right] == colors[0]){
+        right -= 1;
+    }
+    while (left < len_colors && colors[left] == colors[len_colors - 1]){
+        left += 1;
+    }
+    return Math.max(right, len_colors - left - 1);
+}
+```
+---
+
+
+
+2078. 两栋颜色不同且距离最远的房子    --5
+街上有 n 栋房子整齐地排成一列，每栋房子都粉刷上了漂亮的颜色。给你一个下标从 0 开始且长度为 n 的整数数组 colors ，其中 colors[i] 表示第  i 栋房子的颜色。
+
+返回 两栋 颜色 不同 房子之间的 最大 距离。
+
+第 i 栋房子和第 j 栋房子之间的距离是 abs(i - j) ，其中 abs(x) 是 x 的绝对值。
+
+ 
+
+示例 1：
+
+
+
+输入：colors = [1,1,1,6,1,1,1]
+输出：3
+解释：上图中，颜色 1 标识成蓝色，颜色 6 标识成红色。
+两栋颜色不同且距离最远的房子是房子 0 和房子 3 。
+房子 0 的颜色是颜色 1 ，房子 3 的颜色是颜色 6 。两栋房子之间的距离是 abs(0 - 3) = 3 。
+注意，房子 3 和房子 6 也可以产生最佳答案。
+示例 2：
+
+
+
+输入：colors = [1,8,3,8,3]
+输出：4
+解释：上图中，颜色 1 标识成蓝色，颜色 8 标识成黄色，颜色 3 标识成绿色。
+两栋颜色不同且距离最远的房子是房子 0 和房子 4 。
+房子 0 的颜色是颜色 1 ，房子 4 的颜色是颜色 3 。两栋房子之间的距离是 abs(0 - 4) = 4 。
+示例 3：
+
+输入：colors = [0,1]
+输出：1
+解释：两栋颜色不同且距离最远的房子是房子 0 和房子 1 。
+房子 0 的颜色是颜色 0 ，房子 1 的颜色是颜色 1 。两栋房子之间的距离是 abs(0 - 1) = 1 。
+ 
+
+提示：
+
+n == colors.length
+2 <= n <= 100
+0 <= colors[i] <= 100
+生成的测试数据满足 至少 存在 2 栋颜色不同的房子
+
+解：
+最优解<left, right>
+一端一定在边界上，即left == 0 或 right == n-1
+证明：假设都不在边界上
+---left ---- right ---
+记s[left]为s1, 记s[right]为s2, []为s[left], s[right]所在的位置
+s1 s1 s1 [s1] ----- [s2] s2 s2 s2
+显然存在更优的解
+
+go
+100+
+
+```go
+func maxDistance(colors []int) int {
+    len_colors := len(colors)
+    right := len_colors - 1
+    left := 0
+    for right >= 0 && colors[right] == colors[0]{
+        right -= 1
+    }
+    for left < len_colors && colors[left] == colors[len_colors - 1]{
+        left += 1
+    }
+    if right >= len_colors - left - 1{
+        return right
+    }else{
+        return len_colors - left - 1
+    }
+}
+```
+---
