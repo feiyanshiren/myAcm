@@ -1,0 +1,53 @@
+LCP 40. 心算挑战
+「力扣挑战赛」心算项目的挑战比赛中，要求选手从 N 张卡牌中选出 cnt 张卡牌，若这 cnt 张卡牌数字总和为偶数，则选手成绩「有效」且得分为 cnt 张卡牌数字总和。
+给定数组 cards 和 cnt，其中 cards[i] 表示第 i 张卡牌上的数字。 请帮参赛选手计算最大的有效得分。若不存在获取有效得分的卡牌方案，则返回 0。
+
+示例 1：
+
+输入：cards = [1,2,8,9], cnt = 3
+
+输出：18
+
+解释：选择数字为 1、8、9 的这三张卡牌，此时可获得最大的有效得分 1+8+9=18。
+
+示例 2：
+
+输入：cards = [3,3,1], cnt = 1
+
+输出：0
+
+解释：不存在获取有效得分的卡牌方案。
+
+提示：
+
+1 <= cnt <= cards.length <= 10^5
+1 <= cards[i] <= 1000
+
+解：
+不想做了，有点难
+首先如何考虑构造cnt个数和为偶数，很明显有偶数k个奇数+cnt-k个偶数。但是怎么让结果最大呢？偶数之和和奇数之和尽可能大就行。
+
+算法实现细节：
+
+对cards进行逆序排序，然后构造奇数和偶数前缀和数组odd, even。构建前缀和数组原因见下
+枚举所有组合中奇数的个数 k（k必须是偶数） 和 cnt - k（需判断是否足够）个偶数，它们都取最大则该轮组合结果最大。因此更新所有组合最大值就是答案。
+
+
+```py
+class Solution:
+    def maxmiumScore(self, cards: List[int], cnt: int) -> int:
+        cards.sort(reverse=True)
+        js = [0]
+        os = [0]
+        for v in cards:
+            if v & 1:
+                js.append(js[-1] + v)
+            else:
+                os.append(os[-1] + v)
+        res = 0
+        for i in range(0, len(js), 2):
+            if 0 <= cnt - i < len(os):
+                res = max(res, js[i] + os[cnt - i])
+        return res
+```
+---
