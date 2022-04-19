@@ -1,0 +1,136 @@
+607. 销售员
+SQL架构
+表: SalesPerson
+
++-----------------+---------+
+| Column Name     | Type    |
++-----------------+---------+
+| sales_id        | int     |
+| name            | varchar |
+| salary          | int     |
+| commission_rate | int     |
+| hire_date       | date    |
++-----------------+---------+
+Sales_id是该表的主键列。
+该表的每一行都显示了销售人员的姓名和ID，以及他们的工资、佣金率和雇佣日期。
+ 
+
+表: Company
+
++-------------+---------+
+| Column Name | Type    |
++-------------+---------+
+| com_id      | int     |
+| name        | varchar |
+| city        | varchar |
++-------------+---------+
+Com_id是该表的主键列。
+该表的每一行都表示公司的名称和ID，以及公司所在的城市。
+ 
+
+表: Orders
+
++-------------+------+
+| Column Name | Type |
++-------------+------+
+| order_id    | int  |
+| order_date  | date |
+| com_id      | int  |
+| sales_id    | int  |
+| amount      | int  |
++-------------+------+
+Order_id是该表的主键列。
+com_id是Company表中com_id的外键。
+sales_id是来自销售员表com_id的外键。
+该表的每一行包含一个订单的信息。这包括公司的ID、销售人员的ID、订单日期和支付的金额。
+ 
+
+编写一个SQL查询，报告没有任何与名为 “RED” 的公司相关的订单的所有销售人员的姓名。
+
+以 任意顺序 返回结果表。
+
+查询结果格式如下所示。
+
+解：
+嵌套3查询
+
+```sql
+select name
+from SalesPerson
+where sales_id not in
+    (select sales_id from orders where com_id in (select com_id from company where name = "RED"))
+```
+
+---
+
+
+
+607. 销售员    --2
+SQL架构
+表: SalesPerson
+
++-----------------+---------+
+| Column Name     | Type    |
++-----------------+---------+
+| sales_id        | int     |
+| name            | varchar |
+| salary          | int     |
+| commission_rate | int     |
+| hire_date       | date    |
++-----------------+---------+
+Sales_id是该表的主键列。
+该表的每一行都显示了销售人员的姓名和ID，以及他们的工资、佣金率和雇佣日期。
+ 
+
+表: Company
+
++-------------+---------+
+| Column Name | Type    |
++-------------+---------+
+| com_id      | int     |
+| name        | varchar |
+| city        | varchar |
++-------------+---------+
+Com_id是该表的主键列。
+该表的每一行都表示公司的名称和ID，以及公司所在的城市。
+ 
+
+表: Orders
+
++-------------+------+
+| Column Name | Type |
++-------------+------+
+| order_id    | int  |
+| order_date  | date |
+| com_id      | int  |
+| sales_id    | int  |
+| amount      | int  |
++-------------+------+
+Order_id是该表的主键列。
+com_id是Company表中com_id的外键。
+sales_id是来自销售员表com_id的外键。
+该表的每一行包含一个订单的信息。这包括公司的ID、销售人员的ID、订单日期和支付的金额。
+ 
+
+编写一个SQL查询，报告没有任何与名为 “RED” 的公司相关的订单的所有销售人员的姓名。
+
+以 任意顺序 返回结果表。
+
+查询结果格式如下所示。
+
+解：
+左连接+子连接
+
+
+```sql
+
+select name
+from salesperson 
+where sales_id not in 
+(select o.sales_id 
+from orders o, company c
+where o.com_id = c.com_id
+and c.name='RED')
+```
+
+---
