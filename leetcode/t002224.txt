@@ -1,0 +1,109 @@
+2224. 转化时间需要的最少操作数
+给你两个字符串 current 和 correct ，表示两个 24 小时制时间 。
+
+24 小时制时间 按 "HH:MM" 进行格式化，其中 HH 在 00 和 23 之间，而 MM 在 00 和 59 之间。最早的 24 小时制时间为 00:00 ，最晚的是 23:59 。
+
+在一步操作中，你可以将 current 这个时间增加 1、5、15 或 60 分钟。你可以执行这一操作 任意 次数。
+
+返回将 current 转化为 correct 需要的 最少操作数 。
+
+ 
+
+示例 1：
+
+输入：current = "02:30", correct = "04:35"
+输出：3
+解释：
+可以按下述 3 步操作将 current 转换为 correct ：
+- 为 current 加 60 分钟，current 变为 "03:30" 。
+- 为 current 加 60 分钟，current 变为 "04:30" 。 
+- 为 current 加 5 分钟，current 变为 "04:35" 。
+可以证明，无法用少于 3 步操作将 current 转化为 correct 。
+示例 2：
+
+输入：current = "11:00", correct = "11:01"
+输出：1
+解释：只需要为 current 加一分钟，所以最小操作数是 1 。
+ 
+
+提示：
+
+current 和 correct 都符合 "HH:MM" 格式
+current <= correct
+
+
+解：
+转时间戳求余数
+```py
+import time
+class Solution:
+    def convertTime(self, current: str, correct: str) -> int:
+        timeArray1 = time.strptime(current, "%H:%M")
+        timeArray2 = time.strptime(correct, "%H:%M")
+        timeStamp1 = int(time.mktime(timeArray1))
+        timeStamp2 = int(time.mktime(timeArray2))
+        a =abs(timeStamp2 - timeStamp1) // 60
+        res = 0
+        res += a // 60
+        a = a % 60
+        res += a // 15
+        a = a % 15
+        res += a // 5
+        a = a % 5
+        res += a
+        return res
+```
+
+---
+
+
+2224. 转化时间需要的最少操作数    --2
+给你两个字符串 current 和 correct ，表示两个 24 小时制时间 。
+
+24 小时制时间 按 "HH:MM" 进行格式化，其中 HH 在 00 和 23 之间，而 MM 在 00 和 59 之间。最早的 24 小时制时间为 00:00 ，最晚的是 23:59 。
+
+在一步操作中，你可以将 current 这个时间增加 1、5、15 或 60 分钟。你可以执行这一操作 任意 次数。
+
+返回将 current 转化为 correct 需要的 最少操作数 。
+
+ 
+
+示例 1：
+
+输入：current = "02:30", correct = "04:35"
+输出：3
+解释：
+可以按下述 3 步操作将 current 转换为 correct ：
+- 为 current 加 60 分钟，current 变为 "03:30" 。
+- 为 current 加 60 分钟，current 变为 "04:30" 。 
+- 为 current 加 5 分钟，current 变为 "04:35" 。
+可以证明，无法用少于 3 步操作将 current 转化为 correct 。
+示例 2：
+
+输入：current = "11:00", correct = "11:01"
+输出：1
+解释：只需要为 current 加一分钟，所以最小操作数是 1 。
+ 
+
+提示：
+
+current 和 correct 都符合 "HH:MM" 格式
+current <= correct
+
+
+解：
+
+```py
+子数组（Subarray） 差分与前缀和 Leetcode ★两数之和 贪心（Greedy Algorithm） 滑动窗口（Sliding Window） 二分法（Dichotomy） 优先队列（Priority Queue） 双端队列（Deque) 单调栈（Monotone Stack）
+
+class Solution:
+    def convertTime(self, current: str, correct: str) -> int:
+        d = int(correct[:2]) * 60 + int(correct[3:]) - (int(current[:2]) * 60 + int(current[3:]))
+        res = 0
+        for i in [60, 15, 5, 1]:
+            res += d // i
+            d %= i
+        return res
+```
+
+---
