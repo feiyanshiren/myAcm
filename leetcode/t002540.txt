@@ -1,0 +1,158 @@
+2540. 最小公共值
+
+给你两个整数数组 nums1 和 nums2 ，它们已经按非降序排序，请你返回两个数组的 最小公共整数 。如果两个数组 nums1 和 nums2 没有公共整数，请你返回 -1 。
+
+如果一个整数在两个数组中都 至少出现一次 ，那么这个整数是数组 nums1 和 nums2 公共 的。
+
+ 
+
+示例 1：
+
+输入：nums1 = [1,2,3], nums2 = [2,4]
+输出：2
+解释：两个数组的最小公共元素是 2 ，所以我们返回 2 。
+
+示例 2：
+
+输入：nums1 = [1,2,3,6], nums2 = [2,3,4,5]
+输出：2
+解释：两个数组中的公共元素是 2 和 3 ，2 是较小值，所以返回 2 。
+
+ 
+
+提示：
+
+    1 <= nums1.length, nums2.length <= 105
+    1 <= nums1[i], nums2[j] <= 109
+    nums1 和 nums2 都是 非降序 的。
+
+
+
+
+解：
+暴力超时
+```py
+class Solution:
+    def getCommon(self, nums1: List[int], nums2: List[int]) -> int:
+        a1 = -1
+        a2 = -1
+        for i in nums1:
+            if i in nums2:
+                a1 = i
+                break
+        for i in nums2:
+            if i in nums1:
+                a2 = i
+                break
+        return min(a1, a2)
+
+```
+
+---
+
+
+2540. 最小公共值    --2
+
+给你两个整数数组 nums1 和 nums2 ，它们已经按非降序排序，请你返回两个数组的 最小公共整数 。如果两个数组 nums1 和 nums2 没有公共整数，请你返回 -1 。
+
+如果一个整数在两个数组中都 至少出现一次 ，那么这个整数是数组 nums1 和 nums2 公共 的。
+
+ 
+
+示例 1：
+
+输入：nums1 = [1,2,3], nums2 = [2,4]
+输出：2
+解释：两个数组的最小公共元素是 2 ，所以我们返回 2 。
+
+示例 2：
+
+输入：nums1 = [1,2,3,6], nums2 = [2,3,4,5]
+输出：2
+解释：两个数组中的公共元素是 2 和 3 ，2 是较小值，所以返回 2 。
+
+ 
+
+提示：
+
+    1 <= nums1.length, nums2.length <= 105
+    1 <= nums1[i], nums2[j] <= 109
+    nums1 和 nums2 都是 非降序 的。
+
+
+
+
+解：
+使用set
+```py
+class Solution:
+    def getCommon(self, nums1: List[int], nums2: List[int]) -> int:
+        s1 = set(nums1)
+        s2 = set(nums2)
+        s3 = s1 & s2
+        ll = list(s3)
+        if ll:
+            ll.sort()
+            return ll[0]
+        else:
+            return -1
+
+```
+
+---
+
+
+2540. 最小公共值    --3
+
+给你两个整数数组 nums1 和 nums2 ，它们已经按非降序排序，请你返回两个数组的 最小公共整数 。如果两个数组 nums1 和 nums2 没有公共整数，请你返回 -1 。
+
+如果一个整数在两个数组中都 至少出现一次 ，那么这个整数是数组 nums1 和 nums2 公共 的。
+
+ 
+
+示例 1：
+
+输入：nums1 = [1,2,3], nums2 = [2,4]
+输出：2
+解释：两个数组的最小公共元素是 2 ，所以我们返回 2 。
+
+示例 2：
+
+输入：nums1 = [1,2,3,6], nums2 = [2,3,4,5]
+输出：2
+解释：两个数组中的公共元素是 2 和 3 ，2 是较小值，所以返回 2 。
+
+ 
+
+提示：
+
+    1 <= nums1.length, nums2.length <= 105
+    1 <= nums1[i], nums2[j] <= 109
+    nums1 和 nums2 都是 非降序 的。
+
+
+
+
+解：
+dart
+使用set
+```dart
+class Solution {
+  int getCommon(List<int> nums1, List<int> nums2) {
+    var s1 = {...nums1};
+    var s2 = {...nums2};
+    var s3 = s1.intersection(s2);
+    var ll = [...s3];
+    if (ll.length == 0) {
+      return -1;
+    }
+    else{
+      ll.sort();
+      return ll[0];
+    }
+  }
+}
+
+```
+
+---
