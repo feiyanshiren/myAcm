@@ -1,0 +1,198 @@
+2578. 最小和分割
+提示
+简单
+16
+相关企业
+
+给你一个正整数 num ，请你将它分割成两个非负整数 num1 和 num2 ，满足：
+
+    num1 和 num2 直接连起来，得到 num 各数位的一个排列。
+        换句话说，num1 和 num2 中所有数字出现的次数之和等于 num 中所有数字出现的次数。
+    num1 和 num2 可以包含前导 0 。
+
+请你返回 num1 和 num2 可以得到的和的 最小 值。
+
+注意：
+
+    num 保证没有前导 0 。
+    num1 和 num2 中数位顺序可以与 num 中数位顺序不同。
+
+ 
+
+示例 1：
+
+输入：num = 4325
+输出：59
+解释：我们可以将 4325 分割成 num1 = 24 和 num2 = 35 ，和为 59 ，59 是最小和。
+
+示例 2：
+
+输入：num = 687
+输出：75
+解释：我们可以将 687 分割成 num1 = 68 和 num2 = 7 ，和为最优值 75 。
+
+ 
+
+提示：
+
+    10 <= num <= 109
+
+
+解：
+排序 奇偶分组
+
+```py
+class Solution:
+    def splitNum(self, num: int) -> int:
+        list_num = list(str(num))
+        list_num.sort()
+        j = []
+        o = []
+        for i in range(len(list_num)):
+            if i % 2 == 0:
+                j.append(list_num[i])
+            else:
+                o.append(list_num[i])
+        return int("".join(j)) + int("".join(o))
+
+```
+
+
+---
+
+
+2578. 最小和分割    --2
+提示
+简单
+16
+相关企业
+
+给你一个正整数 num ，请你将它分割成两个非负整数 num1 和 num2 ，满足：
+
+    num1 和 num2 直接连起来，得到 num 各数位的一个排列。
+        换句话说，num1 和 num2 中所有数字出现的次数之和等于 num 中所有数字出现的次数。
+    num1 和 num2 可以包含前导 0 。
+
+请你返回 num1 和 num2 可以得到的和的 最小 值。
+
+注意：
+
+    num 保证没有前导 0 。
+    num1 和 num2 中数位顺序可以与 num 中数位顺序不同。
+
+ 
+
+示例 1：
+
+输入：num = 4325
+输出：59
+解释：我们可以将 4325 分割成 num1 = 24 和 num2 = 35 ，和为 59 ，59 是最小和。
+
+示例 2：
+
+输入：num = 687
+输出：75
+解释：我们可以将 687 分割成 num1 = 68 和 num2 = 7 ，和为最优值 75 。
+
+ 
+
+提示：
+
+    10 <= num <= 109
+
+
+解：
+排序 奇偶分组
+
+```js
+/**
+ * @param {number} num
+ * @return {number}
+ */
+var splitNum = function(num) {
+    list_num = num.toString().split('');
+    list_num.sort();
+    a = [];
+    b = [];
+    for(var i=0; i<list_num.length; i++){
+        if(i%2 == 0){
+            a.push(list_num[i]);
+        }else{
+            b.push(list_num[i]);
+        }
+    }
+    return parseInt(a.join('')) + parseInt(b.join(''));
+};
+
+```
+
+
+---
+
+
+2578. 最小和分割    --3
+提示
+简单
+16
+相关企业
+
+给你一个正整数 num ，请你将它分割成两个非负整数 num1 和 num2 ，满足：
+
+    num1 和 num2 直接连起来，得到 num 各数位的一个排列。
+        换句话说，num1 和 num2 中所有数字出现的次数之和等于 num 中所有数字出现的次数。
+    num1 和 num2 可以包含前导 0 。
+
+请你返回 num1 和 num2 可以得到的和的 最小 值。
+
+注意：
+
+    num 保证没有前导 0 。
+    num1 和 num2 中数位顺序可以与 num 中数位顺序不同。
+
+ 
+
+示例 1：
+
+输入：num = 4325
+输出：59
+解释：我们可以将 4325 分割成 num1 = 24 和 num2 = 35 ，和为 59 ，59 是最小和。
+
+示例 2：
+
+输入：num = 687
+输出：75
+解释：我们可以将 687 分割成 num1 = 68 和 num2 = 7 ，和为最优值 75 。
+
+ 
+
+提示：
+
+    10 <= num <= 109
+
+
+解：
+排序 奇偶分组
+
+100+
+```go
+func splitNum(num int) int {
+	listNum := strings.Split(strconv.Itoa(num), "")
+	sort.Strings(listNum)
+	a := make([]string, 0)
+	b := make([]string, 0)
+	for i, v := range listNum {
+		if i%2 == 0 {
+			a = append(a, v)
+		} else {
+			b = append(b, v)
+		}
+	}
+	c, _ := strconv.Atoi(strings.Join(a, ""))
+	d, _ := strconv.Atoi(strings.Join(b, ""))
+	return c + d
+}
+
+```
+
+
+---
